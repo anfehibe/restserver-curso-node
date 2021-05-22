@@ -32,16 +32,28 @@ const existeCategoriaPorId = async(id) => {
         throw new Error(`El id "${id}" no existe en la BD`);
     }
 }
+/* Productos */
 const existeProductoPorId = async(id) => {
     const existeProductos = await Producto.findById(id);
     if (!existeProductos) {
         throw new Error(`El id "${id}" no existe en la BD`);
     }
 }
+/**
+ * Validar Colecciones permitidas
+ */
+const coleccionesPermitidas = ( coleccion = '', colecciones = []) =>{
+    const incluida = colecciones.includes( coleccion );
+    if (!incluida) {
+        throw new Error(`La colección ${coleccion} no es permitida, ${colecciones}`);
+    }
+    return true;
+}
 module.exports = {
     esRoleValido,
     emailExiste,
     existeUsuarioPorId,
     existeCategoriaPorId,
-    existeProductoPorId
+    existeProductoPorId,
+    coleccionesPermitidas
 }
